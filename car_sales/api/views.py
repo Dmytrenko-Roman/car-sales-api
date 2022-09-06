@@ -1,7 +1,7 @@
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
-from api.constants import MODEL_TYPES
+from api.constants.model_types import MODEL_TYPES
 from api.serializers import UploadSerializer
 from api.utils import parser
 

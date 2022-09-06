@@ -1,7 +1,5 @@
 from api.models import CarBrand, CarModel, CarType
 
-# Constants for file uploading:
-
 MODEL_TYPES = {
     "car_brand": CarBrand,
     "car_model": CarModel,
