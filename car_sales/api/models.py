@@ -43,7 +43,9 @@ class Car(models.Model):
     engine_volume = models.DecimalField(
         max_digits=2, decimal_places=1, default=0
     )
-    engine_type = models.CharField(max_length=20, choices=ENGINE_TYPE_CHOICES, null=True)
+    engine_type = models.CharField(
+        max_length=20, choices=ENGINE_TYPE_CHOICES, null=True
+    )
     horsepower = models.PositiveIntegerField(null=False)
     # TODO: add color field
     owners_count = models.PositiveIntegerField(default=1)
