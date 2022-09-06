@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from api.constants.car_fields import ENGINE_TYPE_CHOICES
+
 
 class CustomUser(AbstractUser):
     def __str__(self):
@@ -41,8 +43,9 @@ class Car(models.Model):
     engine_volume = models.DecimalField(
         max_digits=2, decimal_places=1, default=0
     )
+    engine_type = models.CharField(max_length=20, choices=ENGINE_TYPE_CHOICES, null=True)
     horsepower = models.PositiveIntegerField(null=False)
-    # TODO: add color and engine_type fields
+    # TODO: add color field
     owners_count = models.PositiveIntegerField(default=1)
     seats_count = models.PositiveIntegerField(null=False)
     doors_count = models.PositiveIntegerField(null=False)
