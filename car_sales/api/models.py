@@ -26,9 +26,11 @@ class CarBrand(models.Model):
 class CarModel(models.Model):
     name = models.CharField(max_length=30, null=False, unique=True)
 
-    type = models.ForeignKey(to=CarType, on_delete=models.CASCADE, null=False)
+    type = models.ForeignKey(
+        to=CarType, on_delete=models.CASCADE, null=False, to_field="name"
+    )
     brand = models.ForeignKey(
-        to=CarBrand, on_delete=models.CASCADE, null=False
+        to=CarBrand, on_delete=models.CASCADE, null=False, to_field="name"
     )
 
     def __str__(self):
