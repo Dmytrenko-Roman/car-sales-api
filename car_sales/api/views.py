@@ -35,6 +35,6 @@ class UploadViewSet(viewsets.ViewSet):
             )
 
         return Response(
-            {"detail": "Oil objects was successfully created."},
+            {"detail": "Objects was successfully created."},
             status=status.HTTP_201_CREATED,
         )
