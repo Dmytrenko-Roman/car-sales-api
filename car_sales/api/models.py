@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from api.constants.car_fields import ENGINE_TYPE_CHOICES
+from api.constants import car_fields
 
 
 class CustomUser(AbstractUser):
@@ -10,21 +10,21 @@ class CustomUser(AbstractUser):
 
 
 class CarType(models.Model):
-    name = models.CharField(max_length=30, null=False)
+    name = models.CharField(max_length=30, null=False, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class CarBrand(models.Model):
-    name = models.CharField(max_length=30, null=False)
+    name = models.CharField(max_length=30, null=False, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class CarModel(models.Model):
-    name = models.CharField(max_length=30, null=False)
+    name = models.CharField(max_length=30, null=False, unique=True)
 
     type = models.ForeignKey(to=CarType, on_delete=models.CASCADE, null=False)
     brand = models.ForeignKey(
@@ -44,10 +44,12 @@ class Car(models.Model):
         max_digits=2, decimal_places=1, default=0
     )
     engine_type = models.CharField(
-        max_length=20, choices=ENGINE_TYPE_CHOICES, null=True
+        max_length=20, choices=car_fields.ENGINE_TYPE_CHOICES, null=True
     )
     horsepower = models.PositiveIntegerField(null=False)
-    # TODO: add color field
+    color = models.CharField(
+        max_length=20, choices=car_fields.COLOR_CHOICES, null=True
+    )
     owners_count = models.PositiveIntegerField(default=1)
     seats_count = models.PositiveIntegerField(null=False)
     doors_count = models.PositiveIntegerField(null=False)
