@@ -1,7 +1,19 @@
 from rest_framework import serializers
 
 from api.constants import model_types
-from api.models import CarType
+from api.models import CarType, CarBrand
+
+
+class CarTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarType
+        fields = "__all__"
+
+
+class CarBrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarBrand
+        fields = "__all__"
 
 
 class UploadSerializer(serializers.Serializer):
@@ -12,9 +24,3 @@ class UploadSerializer(serializers.Serializer):
 
     class Meta:
         fields = ["file_uploaded", "model_type"]
-
-
-class CarTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CarType
-        fields = "__all__"
