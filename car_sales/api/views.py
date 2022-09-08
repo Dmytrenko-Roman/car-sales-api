@@ -45,7 +45,9 @@ class UploadViewSet(viewsets.ViewSet):
                 MODEL_TYPES[model_type](**row)
                 for row in parser.parse_data(file_obj.file)
             ]
-            MODEL_TYPES[model_type].objects.bulk_create(data)
+            MODEL_TYPES[model_type].objects.bulk_create(
+                data, ignore_conflicts=True
+            )
         except Exception:
             return Response(
                 {
@@ -56,6 +58,6 @@ class UploadViewSet(viewsets.ViewSet):
             )
 
         return Response(
-            {"detail": "Objects was successfully created."},
+            {"detail": f"{model_type} objects was successfully created."},
             status=status.HTTP_201_CREATED,
         )
