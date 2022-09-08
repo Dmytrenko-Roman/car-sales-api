@@ -6,9 +6,10 @@ from api.serializers import (
     UploadSerializer,
     CarTypeSerializer,
     CarBrandSerializer,
+    CarModelSerializer,
 )
 from api.utils import parser
-from api.models import CarType, CarBrand
+from api.models import CarType, CarBrand, CarModel
 
 
 class CarTypeViewSet(viewsets.ModelViewSet):
@@ -19,6 +20,11 @@ class CarTypeViewSet(viewsets.ModelViewSet):
 class CarBrandViewSet(viewsets.ModelViewSet):
     serializer_class = CarBrandSerializer
     queryset = CarBrand.objects.all()
+
+
+class CarModelViewSet(viewsets.ModelViewSet):
+    serializer_class = CarModelSerializer
+    queryset = CarModel.objects.all()
 
 
 class UploadViewSet(viewsets.ViewSet):
