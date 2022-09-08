@@ -2,8 +2,14 @@ from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 from api.constants.model_types import MODEL_TYPES
-from api.serializers import UploadSerializer
+from api.serializers import UploadSerializer, CarTypeSerializer
 from api.utils import parser
+from api.models import CarType
+
+
+class CarTypeViewSet(viewsets.ModelViewSet):
+    serializer_class = CarTypeSerializer
+    queryset = CarType.objects.all()
 
 
 class UploadViewSet(viewsets.ViewSet):
