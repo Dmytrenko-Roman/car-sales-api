@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from api.constants import model_types
-from api.models import CarType, CarBrand, CarModel
+from api.models import CarType, CarBrand, CarModel, Car
 
 
 class CarTypeSerializer(serializers.ModelSerializer):
@@ -19,6 +19,12 @@ class CarBrandSerializer(serializers.ModelSerializer):
 class CarModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarModel
+        fields = "__all__"
+
+
+class CarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
         fields = "__all__"
 
 
