@@ -1,5 +1,9 @@
 from django.urls import include, path
 from rest_framework import routers
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 from api import views
 
@@ -12,4 +16,6 @@ router.register(r"cars", views.CarViewSet, basename="cars")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("login/", TokenObtainPairView.as_view(), name="login"),
+    path("login/refresh/", TokenRefreshView.as_view(), name="login_refresh"),
 ]
