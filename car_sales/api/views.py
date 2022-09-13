@@ -4,13 +4,19 @@ from rest_framework.response import Response
 from api.constants.model_types import MODEL_TYPES
 from api.serializers import (
     UploadSerializer,
+    CustomUserSerializer,
     CarTypeSerializer,
     CarBrandSerializer,
     CarModelSerializer,
     CarSerializer,
 )
 from api.utils import parser
-from api.models import CarType, CarBrand, CarModel, Car
+from api.models import CarType, CarBrand, CarModel, Car, CustomUser
+
+
+class CustomUserViewSet(viewsets.ModelViewSet):
+    serializer_class = CustomUserSerializer
+    queryset = CustomUser.objects.all()
 
 
 class CarTypeViewSet(viewsets.ModelViewSet):
