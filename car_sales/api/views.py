@@ -1,7 +1,7 @@
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from api.constants.model_types import MODEL_TYPES
 from api.models import Car, CarBrand, CarModel, CarType, CustomUser
@@ -15,14 +15,18 @@ from api.serializers import (
     RegisterSerializer,
 )
 from api.utils import parser
+from api.permissions import AllowGetRetrieve, AllowCreate
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+
     default_serializer_class = CustomUserSerializer
     serializer_classes = {
         "create": RegisterSerializer,
     }
-    queryset = CustomUser.objects.all()
+
+    permission_classes = [IsAdminUser | AllowCreate]
 
     def get_serializer_class(self):
         return self.serializer_classes.get(
@@ -41,16 +45,19 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 class CarTypeViewSet(viewsets.ModelViewSet):
     serializer_class = CarTypeSerializer
     queryset = CarType.objects.all()
+    permission_classes = [IsAdminUser | AllowGetRetrieve]
 
 
 class CarBrandViewSet(viewsets.ModelViewSet):
     serializer_class = CarBrandSerializer
     queryset = CarBrand.objects.all()
+    permission_classes = [IsAdminUser | AllowGetRetrieve]
 
 
 class CarModelViewSet(viewsets.ModelViewSet):
     serializer_class = CarModelSerializer
     queryset = CarModel.objects.all()
+    permission_classes = [IsAdminUser | AllowGetRetrieve]
 
 
 class CarViewSet(viewsets.ModelViewSet):
