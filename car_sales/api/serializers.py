@@ -1,13 +1,60 @@
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from api.constants import model_types
-from api.models import CarType, CarBrand, CarModel, Car, CustomUser
+from api.models import Car, CarBrand, CarModel, CarType, CustomUser
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ["id", "email", "username", "phone_number", "subscription"]
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+    token = serializers.SerializerMethodField(read_only=True)
+    password = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password]
+    )
+    password2 = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = CustomUser
+        fields = (
+            "username",
+            "password",
+            "password2",
+            "email",
+            "phone_number",
+            "subscription",
+            "token",
+        )
+
+    def validate(self, attrs):
+        if attrs["password"] != attrs["password2"]:
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."}
+            )
+
+        return attrs
+
+    def create(self, validated_data):
+        user = CustomUser.objects.create(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            phone_number=validated_data["phone_number"],
+            subscription=validated_data["subscription"],
+        )
+        user.set_password(validated_data["password"])
+        user.save()
+
+        return user
+
+    def get_token(self, obj):
+        token = RefreshToken.for_user(obj)
+
+        return str(token.access_token)
 
 
 class CarTypeSerializer(serializers.ModelSerializer):

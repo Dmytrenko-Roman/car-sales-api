@@ -1,22 +1,41 @@
 from rest_framework import status, viewsets
 from rest_framework.response import Response
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 
 from api.constants.model_types import MODEL_TYPES
+from api.models import Car, CarBrand, CarModel, CarType, CustomUser
 from api.serializers import (
-    UploadSerializer,
-    CustomUserSerializer,
-    CarTypeSerializer,
     CarBrandSerializer,
     CarModelSerializer,
     CarSerializer,
+    CarTypeSerializer,
+    CustomUserSerializer,
+    UploadSerializer,
+    RegisterSerializer,
 )
 from api.utils import parser
-from api.models import CarType, CarBrand, CarModel, Car, CustomUser
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
-    serializer_class = CustomUserSerializer
+    default_serializer_class = CustomUserSerializer
+    serializer_classes = {
+        "create": RegisterSerializer,
+    }
     queryset = CustomUser.objects.all()
+
+    def get_serializer_class(self):
+        return self.serializer_classes.get(
+            self.action, self.default_serializer_class
+        )
+
+    @action(
+        detail=False, methods=["get"], permission_classes=[IsAuthenticated]
+    )
+    def profile(self, request):
+        user = request.user
+        serializer = CustomUserSerializer(user, many=False)
+        return Response(serializer.data)
 
 
 class CarTypeViewSet(viewsets.ModelViewSet):
