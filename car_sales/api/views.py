@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -39,6 +40,24 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     def profile(self, request):
         user = request.user
         serializer = CustomUserSerializer(user, many=False)
+        return Response(serializer.data)
+    
+    @action(
+        detail=False, methods=["put"], permission_classes=[IsAuthenticated]
+    )
+    def update_profile(self, request):
+        user = request.user
+        data = request.data
+        serializer = RegisterSerializer(user, many=False)
+
+        user.username = data["username"]
+        user.email = data["email"]
+        user.phone_number = data["phone_number"]
+        user.subscription = data["subscription"]
+        if data["password"] != "":
+            user.password = make_password(data["password"])
+        user.save()
+
         return Response(serializer.data)
 
 
