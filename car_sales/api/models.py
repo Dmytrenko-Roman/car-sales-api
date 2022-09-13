@@ -5,6 +5,10 @@ from api.constants import car_fields
 
 
 class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+    phone_number = models.CharField(max_length=13, null=False, unique=True)
+    subscription = models.BooleanField(default=False)
+
     def __str__(self):
         return self.username
 
