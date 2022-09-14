@@ -79,6 +79,9 @@ class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = "__all__"
+        extra_kwargs = {
+            "owner": {"read_only": True},
+        }
 
 
 class UploadSerializer(serializers.Serializer):

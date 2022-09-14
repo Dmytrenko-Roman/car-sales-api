@@ -63,6 +63,9 @@ class Car(models.Model):
     model = models.ForeignKey(
         to=CarModel, on_delete=models.CASCADE, null=False
     )
+    owner = models.ForeignKey(
+        to=CustomUser, on_delete=models.CASCADE, null=False
+    )
 
     def __str__(self):
         return f"{str(self.model)}: ${str(self.price)}"

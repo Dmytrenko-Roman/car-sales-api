@@ -3,7 +3,6 @@ from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-
 from api.constants.model_types import MODEL_TYPES
 from api.models import Car, CarBrand, CarModel, CarType, CustomUser
 from api.serializers import (
@@ -16,7 +15,10 @@ from api.serializers import (
     RegisterSerializer,
 )
 from api.utils import parser
-from api.permissions import AllowGetRetrieve, AllowCreate
+from api.permissions import (
+    AllowGetRetrieve,
+    AllowCreate,
+)
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
@@ -41,7 +43,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         user = request.user
         serializer = CustomUserSerializer(user, many=False)
         return Response(serializer.data)
-    
+
     @action(
         detail=False, methods=["put"], permission_classes=[IsAuthenticated]
     )
@@ -82,6 +84,20 @@ class CarModelViewSet(viewsets.ModelViewSet):
 class CarViewSet(viewsets.ModelViewSet):
     serializer_class = CarSerializer
     queryset = Car.objects.all()
+    permission_classes = [IsAuthenticated | AllowGetRetrieve]
+
+    def perform_create(self, serializer):
+        return serializer.save(owner=self.request.user)
+
+    def destroy(self, request, pk=None):
+        car = Car.objects.get(pk=pk)
+        if request.user.id != car.owner_id:
+            return Response(
+                {"message": "You do not have permission to do this action"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        car.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UploadViewSet(viewsets.ViewSet):
