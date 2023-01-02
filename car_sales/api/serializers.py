@@ -78,6 +78,8 @@ class CarBrandSerializer(serializers.ModelSerializer):
 
 
 class CarSerializer(serializers.ModelSerializer):
+    model = CarModelSerializer(read_only=True)
+
     class Meta:
         model = Car
         fields = "__all__"

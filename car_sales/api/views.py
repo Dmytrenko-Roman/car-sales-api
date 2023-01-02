@@ -69,18 +69,22 @@ class CarTypeViewSet(viewsets.ModelViewSet):
     serializer_class = CarTypeSerializer
     queryset = CarType.objects.all()
     permission_classes = [IsAdminUser | AllowGetRetrieve]
+    filter_backends = [DjangoFilterBackend]
 
 
 class CarBrandViewSet(viewsets.ModelViewSet):
     serializer_class = CarBrandSerializer
     queryset = CarBrand.objects.all()
     permission_classes = [IsAdminUser | AllowGetRetrieve]
+    filter_backends = [DjangoFilterBackend]
+    
 
 
 class CarModelViewSet(viewsets.ModelViewSet):
     serializer_class = CarModelSerializer
     queryset = CarModel.objects.all()
     permission_classes = [IsAdminUser | AllowGetRetrieve]
+    filter_backends = [DjangoFilterBackend]
 
 
 class CarViewSet(viewsets.ModelViewSet):
