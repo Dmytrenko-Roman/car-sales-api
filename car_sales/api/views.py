@@ -3,6 +3,8 @@ from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from django_filters.rest_framework import DjangoFilterBackend
+
 from api.constants.model_types import MODEL_TYPES
 from api.models import Car, CarBrand, CarModel, CarType, CustomUser
 from api.serializers import (
@@ -85,6 +87,8 @@ class CarViewSet(viewsets.ModelViewSet):
     serializer_class = CarSerializer
     queryset = Car.objects.all()
     permission_classes = [IsAuthenticated | AllowGetRetrieve]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["model"]
 
     def perform_create(self, serializer):
         return serializer.save(owner=self.request.user)
