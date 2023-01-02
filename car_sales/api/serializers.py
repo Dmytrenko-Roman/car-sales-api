@@ -63,16 +63,18 @@ class CarTypeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class CarBrandSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CarBrand
-        fields = "__all__"
-
-
 class CarModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarModel
         fields = "__all__"
+
+
+class CarBrandSerializer(serializers.ModelSerializer):
+    models = CarModelSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = CarBrand
+        fields = ("id", "name", "models")
 
 
 class CarSerializer(serializers.ModelSerializer):
