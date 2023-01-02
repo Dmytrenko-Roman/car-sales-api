@@ -85,6 +85,7 @@ class CarModelViewSet(viewsets.ModelViewSet):
     queryset = CarModel.objects.all()
     permission_classes = [IsAdminUser | AllowGetRetrieve]
     filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["brand"]
 
 
 class CarViewSet(viewsets.ModelViewSet):
