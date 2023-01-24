@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.timezone import now
 
 from api.constants import car_fields
 
@@ -70,6 +71,7 @@ class Car(models.Model):
     owner = models.ForeignKey(
         to=CustomUser, on_delete=models.CASCADE, null=False
     )
+    created_at = models.DateTimeField(default=now)
 
     def __str__(self):
         return f"{str(self.model)}: ${str(self.price)}"
