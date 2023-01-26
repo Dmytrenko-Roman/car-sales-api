@@ -78,7 +78,6 @@ class CarBrandViewSet(viewsets.ModelViewSet):
     queryset = CarBrand.objects.all()
     permission_classes = [IsAdminUser | AllowGetRetrieve]
     filter_backends = [DjangoFilterBackend]
-    
 
 
 class CarModelViewSet(viewsets.ModelViewSet):
@@ -95,7 +94,7 @@ class CarViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated | AllowGetRetrieve]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ["model"]
-    filter_fields = '__all__'
+    filter_fields = "__all__"
     ordering_fields = ["created_at"]
 
     def perform_create(self, serializer):
