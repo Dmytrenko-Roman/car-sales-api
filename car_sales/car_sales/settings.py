@@ -102,6 +102,6 @@ AUTH_USER_MODEL = "api.CustomUser"
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mediafiles")
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"

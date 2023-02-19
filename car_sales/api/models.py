@@ -4,8 +4,10 @@ from django.utils.timezone import now
 
 from api.constants import car_fields
 
+
 def upload_to(instance, filename):
-    return f'images/{filename}'
+    return f"images/{filename}"
+
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
