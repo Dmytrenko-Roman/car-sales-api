@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.filters import OrderingFilter
+from rest_framework.parsers import MultiPartParser, FormParser
 from django_filters.rest_framework import DjangoFilterBackend
 
 from api.constants.model_types import MODEL_TYPES
@@ -92,6 +93,7 @@ class CarViewSet(viewsets.ModelViewSet):
     serializer_class = CarSerializer
     queryset = Car.objects.all()
     permission_classes = [IsAuthenticated | AllowGetRetrieve]
+    parser_classes = (MultiPartParser, FormParser)
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ["model"]
     filter_fields = "__all__"

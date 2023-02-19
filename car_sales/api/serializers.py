@@ -81,6 +81,7 @@ class CarSerializer(serializers.ModelSerializer):
     model = CarModelSerializer(read_only=True)
     owner = CustomUserSerializer(read_only=True)
     engine_type = serializers.CharField(source="get_engine_type_display")
+    image_url = serializers.ImageField(required=False)
 
     class Meta:
         model = Car

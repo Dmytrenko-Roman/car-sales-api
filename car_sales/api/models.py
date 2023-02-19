@@ -4,6 +4,8 @@ from django.utils.timezone import now
 
 from api.constants import car_fields
 
+def upload_to(instance, filename):
+    return f'images/{filename}'
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
@@ -64,6 +66,7 @@ class Car(models.Model):
     owners_count = models.PositiveIntegerField(default=1)
     seats_count = models.PositiveIntegerField(null=False)
     doors_count = models.PositiveIntegerField(null=False)
+    image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
 
     model = models.ForeignKey(
         to=CarModel, on_delete=models.CASCADE, null=False

@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 from django.core.management.utils import get_random_secret_key
 
@@ -100,3 +101,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "api.CustomUser"
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
+
+MEDIA_URL = '/media/'
