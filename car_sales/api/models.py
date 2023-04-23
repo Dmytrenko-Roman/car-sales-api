@@ -12,6 +12,7 @@ def upload_to(instance, filename):
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=13, null=False, unique=True)
+    image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
     subscription = models.BooleanField(default=False)
 
     def __str__(self):
@@ -54,6 +55,7 @@ class Car(models.Model):
     price = models.PositiveIntegerField(null=False)
     mileage = models.PositiveIntegerField(null=False)
     year = models.CharField(max_length=30, null=False)
+    equipment = models.CharField(max_length=30, null=False, default="Base")
     description = models.CharField(max_length=500, null=True)
     engine_volume = models.DecimalField(
         max_digits=2, decimal_places=1, default=0

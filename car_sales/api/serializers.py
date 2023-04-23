@@ -9,7 +9,14 @@ from api.models import Car, CarBrand, CarModel, CarType, CustomUser
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ["id", "email", "username", "phone_number", "subscription"]
+        fields = [
+            "id",
+            "email",
+            "username",
+            "phone_number",
+            "subscription",
+            "image_url",
+        ]
 
 
 class RegisterSerializer(serializers.ModelSerializer):
